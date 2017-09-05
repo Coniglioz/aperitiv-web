@@ -1,6 +1,6 @@
-Ext.define('Aperitiv.view.login.LoginController', {
+Ext.define('Aperitiv.view.list.ListController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.login',
+    alias: 'controller.list',
 
     onSubmit: function () {
         if (!this.getView().isValid()) {

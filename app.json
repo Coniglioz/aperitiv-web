@@ -218,6 +218,9 @@
      */
     "js": [
         {
+            "path": "resources/config.js"
+        },
+        {
             "path": "${framework.dir}/build/ext-modern-all-debug.js"
         },
         {

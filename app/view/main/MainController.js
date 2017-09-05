@@ -27,14 +27,19 @@ Ext.define('Aperitiv.view.main.MainController', {
 
     onLogin: function () {
         Ext.suspendLayouts();
-        Ext.Viewport.removeAll(true, true);
-        Ext.Viewport.add({
+        this.getView().removeAll(true, true);
+        this.getView().add({
             xtype: 'login'
         });
         Ext.resumeLayouts(true);
     },
 
     onList: function () {
-        console.log('list');
+        Ext.suspendLayouts();
+        this.getView().removeAll(true, true);
+        this.getView().add({
+            xtype: 'aperitiv'
+        });
+        Ext.resumeLayouts(true);
     }
 });

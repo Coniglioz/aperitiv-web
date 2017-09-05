@@ -2,9 +2,13 @@
   "title": "Aperitiv",
   "login": {
     "title": "Accedi",
+    "confirm": "Avanti",
     "helpText": "Seleziona la nazione e inserisci il tuo numero di telefono completo.",
     "countryLabel": "Nazione",
     "countryCodeLabel": "Codice",
     "telephoneNumberLabel": "Numero di telefono"
+  },
+  "list": {
+    "title": "Aperitiv"
   }
 }

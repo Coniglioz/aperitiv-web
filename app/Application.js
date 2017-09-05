@@ -12,7 +12,8 @@ Ext.define('Aperitiv.Application', {
         'Ext.layout.Center',
         'Ext.layout.HBox',
         'Ext.layout.VBox',
-        'Ext.field.Container'
+        'Ext.field.Container',
+        'Ext.dataview.List'
     ],
 
     requiredResources: [
