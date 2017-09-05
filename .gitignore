@@ -1,0 +1,11 @@
+/build
+bootstrap.*
+classic.json*
+modern.json*
+.sencha
+/ext
+/cordova/*
+!cordova/config.xml
+
+.idea
+.DS_Store
