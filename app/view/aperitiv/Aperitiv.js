@@ -1,8 +1,6 @@
-Ext.define('Aperitiv.view.list.List', {
+Ext.define('Aperitiv.view.aperitiv.Aperitiv', {
     extend: 'Ext.Panel',
     xtype: 'aperitiv',
-
-    controller: 'list',
 
     layout: 'fit',
 
@@ -11,6 +9,6 @@ Ext.define('Aperitiv.view.list.List', {
     },
 
     items: [{
-        xtype: 'list'
+        xtype: 'aperitivlist'
     }]
 });

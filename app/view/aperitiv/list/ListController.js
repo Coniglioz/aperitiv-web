@@ -1,6 +1,6 @@
-Ext.define('Aperitiv.view.list.ListController', {
+Ext.define('Aperitiv.view.aperitiv.list.ListController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.list',
+    alias: 'controller.aperitivlist',
 
     onSubmit: function () {
         if (!this.getView().isValid()) {

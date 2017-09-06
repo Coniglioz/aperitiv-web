@@ -38,12 +38,14 @@ Ext.define('Aperitiv.mixin.JWT', {
 
             // Sync token on each server response
             Ext.Ajax.on('requestcomplete', (function (conn, response) {
-                var token = response.getResponseHeader("Authorization");
-                if (token) {
-                    if (Ext.String.startsWith(token, 'Bearer ', true)) {
-                        token = token.substring(7);
+                if (response && Ext.isFunction(response.getResponseHeader)) {
+                    var token = response.getResponseHeader("Authorization");
+                    if (token) {
+                        if (Ext.String.startsWith(token, 'Bearer ', true)) {
+                            token = token.substring(7);
+                        }
+                        me.updateToken(token);
                     }
-                    me.updateToken(token);
                 }
             }));
 
