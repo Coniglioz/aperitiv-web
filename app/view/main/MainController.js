@@ -54,14 +54,13 @@ Ext.define('Aperitiv.view.main.MainController', {
     loadContacts: function () {
         var deferred = new Ext.Deferred();
 
-        if (!Ext.platformTags.cordova) {
+        if (Ext.platformTags.desktop) {
             deferred.reject();
         } else {
             var options = new ContactFindOptions();
             options.multiple = true;
             options.hasPhoneNumber = true;
-
-            navigator.contacts.find('*', function (contacts) {
+            navigator.contacts.find(['*'], function (contacts) {
                 // todo add to store
                 // todo filter
                 window.alert(contacts.length);
@@ -73,5 +72,10 @@ Ext.define('Aperitiv.view.main.MainController', {
         }
 
         return deferred.promise;
+    },
+
+    onLogout: function () {
+        Aperitiv.getApplication().logout();
+        this.redirectTo('login');
     }
 });

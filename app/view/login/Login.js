@@ -32,8 +32,18 @@ Ext.define('Aperitiv.view.login.Login', {
     }, {
         xtype: 'combobox',
         name: 'country',
+        required: true,
+        queryMode: 'local',
+        store: {
+            type: 'countries'
+        },
+        valueField: 'isoCode',
+        displayField: 'localizationText',
         localized: {
             label: '{login.countryLabel}'
+        },
+        bind: {
+            value: '{country}'
         }
     }, {
         xtype: 'containerfield',
@@ -41,14 +51,25 @@ Ext.define('Aperitiv.view.login.Login', {
         items: [{
             xtype: 'combobox',
             margin: '0 10 0 0',
+            required: true,
+            queryMode: 'local',
+            store: {
+                type: 'countries'
+            },
+            valueField: 'isoCode',
+            displayField: 'countryCode1',
             width: 100,
             name: 'countryCode',
             localized: {
                 label: '{login.countryCodeLabel}'
+            },
+            bind: {
+                value: '{country}'
             }
         }, {
             xtype: 'textfield',
             inputType: 'tel',
+            required: true,
             flex: 1,
             name: 'telephoneNumber',
             localized: {

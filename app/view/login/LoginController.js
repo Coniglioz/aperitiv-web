@@ -3,7 +3,7 @@ Ext.define('Aperitiv.view.login.LoginController', {
     alias: 'controller.login',
 
     onSubmit: function () {
-        if (!this.getView().isValid()) {
+        if (!this.getView().validate()) {
             return;
         }
 

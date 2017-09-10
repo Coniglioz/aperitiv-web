@@ -3,6 +3,7 @@ Ext.define('Aperitiv.view.main.MainModel', {
     alias: 'viewmodel.main',
 
     data: {
-        jwtPayload: null
+        jwtPayload: null,
+        country: null
     }
 });
