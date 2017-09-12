@@ -10,8 +10,8 @@ Ext.define('Aperitiv.view.login.LoginController', {
         var me = this;
         me.submitLogin('asgdhavdshxjasvjhdvajshd')
             .then(function (token) {
-                Aperitiv.getApplication().login(token);
-                me.redirectTo('aperitiv');
+                var user = me.getViewModel().get('jwtPayload');
+                me.redirectTo(user.name ? 'aperitiv' : 'info');
             });
     },
 

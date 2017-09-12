@@ -3,6 +3,24 @@
   "menu": {
     "logout": "Logout"
   },
+  "login": {
+    "title": "Accedi",
+    "confirm": "Avanti",
+    "helpText": "Seleziona la nazione e inserisci il tuo numero di telefono completo.",
+    "countryLabel": "Nazione",
+    "countryCodeLabel": "Codice",
+    "telephoneNumberLabel": "Numero di telefono"
+  },
+  "logininfo": {
+    "title": "Info",
+    "confirm": "Avanti",
+    "helpText": "Scegli un nome e il tuo drink preferito.",
+    "nameLabel": "Nome",
+    "infoLabel": "Drink preferito"
+  },
+  "list": {
+    "title": "Aperitiv"
+  },
   "countries": {
     "ab": "Abkhazia",
     "af": "Afghanistan",
@@ -255,16 +273,5 @@
     "zm": "Zambia",
     "tz_uk": "Zanzibar",
     "zw": "Zimbabwe"
-  },
-  "login": {
-    "title": "Accedi",
-    "confirm": "Avanti",
-    "helpText": "Seleziona la nazione e inserisci il tuo numero di telefono completo.",
-    "countryLabel": "Nazione",
-    "countryCodeLabel": "Codice",
-    "telephoneNumberLabel": "Numero di telefono"
-  },
-  "list": {
-    "title": "Aperitiv"
   }
 }

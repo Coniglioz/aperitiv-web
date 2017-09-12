@@ -6,6 +6,9 @@ Ext.define('Aperitiv.view.main.MainController', {
         'login': {
             action: 'onLogin'
         },
+        'info': {
+            action: 'onInfo'
+        },
         'aperitiv': {
             before: 'loadContacts',
             action: 'onList'
@@ -24,10 +27,13 @@ Ext.define('Aperitiv.view.main.MainController', {
             if (!user) {
                 this.redirectTo('login');
                 action.stop();
+            } else if (!user.name && route.getName() !== 'info') {
+                this.redirectTo('info');
+                action.stop();
             }
         } else {
             if (user) {
-                this.redirectTo('aperitiv');
+                this.redirectTo(user.name ? 'aperitiv' : 'info');
                 action.stop();
             }
         }
@@ -38,6 +44,15 @@ Ext.define('Aperitiv.view.main.MainController', {
         this.getView().removeAll(true, true);
         this.getView().add({
             xtype: 'login'
+        });
+        Ext.resumeLayouts(true);
+    },
+
+    onInfo: function () {
+        Ext.suspendLayouts();
+        this.getView().removeAll(true, true);
+        this.getView().add({
+            xtype: 'logininfo'
         });
         Ext.resumeLayouts(true);
     },
