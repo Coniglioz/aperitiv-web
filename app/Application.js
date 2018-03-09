@@ -25,8 +25,10 @@ Ext.define('Aperitiv.Application', {
 
     defaultToken: 'aperitiv',
 
+    stores: ['Contacts'],
+
     getLang: function () {
-        var lang = location.href.match(/locale=([\w-]+)/);
+        let lang = location.href.match(/locale=([\w-]+)/);
         return (lang && lang[1]) || 'it';
     },
 

@@ -18,7 +18,7 @@ Ext.define('Aperitiv.mixin.TranslationsMashup', {
         },
 
         process: function (targetClass) {
-            var body = targetClass.prototype,
+            let body = targetClass.prototype,
                 hooks = targetClass._classHooks,
                 onCreated = hooks.onCreated,
                 lang = (body.getLang && body.getLang()) || Translations.getLang(),
@@ -34,7 +34,7 @@ Ext.define('Aperitiv.mixin.TranslationsMashup', {
 
                 // Load resources before to init target class
                 hooks.onCreated = function () {
-                    var me = this,
+                    let me = this,
                         args = Ext.Array.slice(arguments);
 
                     // Load resources
@@ -44,7 +44,7 @@ Ext.define('Aperitiv.mixin.TranslationsMashup', {
                         }))
                         .then(function (responses) {
                             responses.forEach(function (responseText) {
-                                var data = Ext.decode(responseText, true);
+                                let data = Ext.decode(responseText, true);
                                 if (data) {
                                     Ext.apply(Translations.translations, data);
                                 } else {
@@ -61,7 +61,7 @@ Ext.define('Aperitiv.mixin.TranslationsMashup', {
         },
 
         loadResource: function (resource) {
-            var deferred = new Ext.Deferred();
+            let deferred = new Ext.Deferred();
             Ext.Ajax.request({
                 url: resource,
                 cache: true,
@@ -77,7 +77,7 @@ Ext.define('Aperitiv.mixin.TranslationsMashup', {
         },
 
         getLang: function () {
-            var lang = location.href.match(/locale=([\w-]+)/);
+            let lang = location.href.match(/locale=([\w-]+)/);
             return (lang && lang[1]) || 'en';
         }
     },

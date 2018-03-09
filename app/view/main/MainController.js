@@ -22,7 +22,7 @@ Ext.define('Aperitiv.view.main.MainController', {
     },
 
     onBeforeRoute: function (action, route) {
-        var user = this.getViewModel().get('jwtPayload');
+        let user = this.getViewModel().get('jwtPayload');
         if (route.getName() !== 'login') {
             if (!user) {
                 this.redirectTo('login');
@@ -67,19 +67,33 @@ Ext.define('Aperitiv.view.main.MainController', {
     },
 
     loadContacts: function () {
-        var deferred = new Ext.Deferred();
+        let deferred = new Ext.Deferred();
 
         if (Ext.platformTags.desktop) {
             deferred.reject();
         } else {
-            var options = new ContactFindOptions();
+            let options = new ContactFindOptions();
             options.multiple = true;
             options.hasPhoneNumber = true;
             navigator.contacts.find(['*'], function (contacts) {
-                // todo add to store
-                // todo filter
-                window.alert(contacts.length);
-                deferred.resolve(contacts);
+                Ext.Ajax.request({
+                    url: BACKEND.URL + '/api/contact/check',
+                    method: 'POST',
+                    jsonData: {
+                        contacts: contacts
+                    },
+                    callback: function (options, success, response) {
+                        if (success) {
+                            let result = Ext.decode(response.responseText, true),
+                                store = Ext.data.StoreManager.lookup('contacts');
+                            store.loadData(result.data);
+                            deferred.resolve();
+                        } else {
+                            window.alert('Errore check contatti');
+                            deferred.reject('Errore check contatti');
+                        }
+                    }
+                });
             }, function (contactError) {
                 window.alert(contactError);
                 deferred.reject(contactError);

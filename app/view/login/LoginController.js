@@ -7,16 +7,16 @@ Ext.define('Aperitiv.view.login.LoginController', {
             return;
         }
 
-        var me = this;
+        let me = this;
         me.submitLogin('asgdhavdshxjasvjhdvajshd')
             .then(function (token) {
-                var user = me.getViewModel().get('jwtPayload');
+                let user = me.getViewModel().get('jwtPayload');
                 me.redirectTo(user.name ? 'aperitiv' : 'info');
             });
     },
 
     submitLogin: function (phoneHash) {
-        var deferred = new Ext.Deferred();
+        let deferred = new Ext.Deferred();
 
         Ext.Ajax.request({
             url: BACKEND.URL + '/api/login',
@@ -26,7 +26,7 @@ Ext.define('Aperitiv.view.login.LoginController', {
             },
             callback: function (options, success, response) {
                 if (success) {
-                    var result = Ext.decode(response.responseText, true);
+                    let result = Ext.decode(response.responseText, true);
                     deferred.resolve(result.token);
                 } else {
                     deferred.reject();

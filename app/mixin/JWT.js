@@ -32,14 +32,14 @@ Ext.define('Aperitiv.mixin.JWT', {
     privates: {
 
         processJWT: function () {
-            var me = this;
+            let me = this;
 
             me.storage = Ext.util.LocalStorage.get('jwt');
 
             // Sync token on each server response
             Ext.Ajax.on('requestcomplete', (function (conn, response) {
                 if (response && Ext.isFunction(response.getResponseHeader)) {
-                    var token = response.getResponseHeader("Authorization");
+                    let token = response.getResponseHeader("Authorization");
                     if (token) {
                         if (Ext.String.startsWith(token, 'Bearer ', true)) {
                             token = token.substring(7);
@@ -50,7 +50,7 @@ Ext.define('Aperitiv.mixin.JWT', {
             }));
 
             // Load token from storage
-            var token = me.storage.getItem('token');
+            let token = me.storage.getItem('token');
             if (token) {
                 me.updateToken(token);
             }
@@ -61,7 +61,7 @@ Ext.define('Aperitiv.mixin.JWT', {
         },
 
         updateToken: function (token) {
-            var me = this,
+            let me = this,
                 jsonPayload = me.validateToken(token),
                 mainView = me.getMainView();
 
@@ -76,7 +76,7 @@ Ext.define('Aperitiv.mixin.JWT', {
             } else {
                 this.storage.removeItem('token');
 
-                var headers = Ext.Ajax.getDefaultHeaders() || {};
+                let headers = Ext.Ajax.getDefaultHeaders() || {};
                 delete headers.Authorization;
                 Ext.Ajax.setDefaultHeaders(headers);
 
@@ -86,7 +86,7 @@ Ext.define('Aperitiv.mixin.JWT', {
 
         validateToken: function (token) {
             try {
-                var tokenParts = token.split('.'),
+                let tokenParts = token.split('.'),
                     decodedToken = atob(tokenParts[1]),
                     jsonPayload = Ext.decode(decodedToken);
 
