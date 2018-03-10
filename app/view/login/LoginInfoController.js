@@ -11,7 +11,7 @@ Ext.define('Aperitiv.view.login.LoginInfoController', {
             values = me.getView().getValues();
         me.updateLogin(me.getViewModel().get('jwtPayload'), values.name, values.info)
             .then(function (id) {
-                me.redirectTo('aperitiv');
+                Aperitiv.getApplication().getMainView().getController().internalRedirect('aperitiv');
             });
     },
 

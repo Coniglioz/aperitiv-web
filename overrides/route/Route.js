@@ -1,4 +1,4 @@
-Ext.define('Pallex.overrides.route.Route', {
+Ext.define('Aperitiv.overrides.route.Route', {
     override: 'Ext.route.Route',
 
     execute: function (token, argConfig) {

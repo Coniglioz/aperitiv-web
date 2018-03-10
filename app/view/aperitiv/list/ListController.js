@@ -3,6 +3,6 @@ Ext.define('Aperitiv.view.aperitiv.list.ListController', {
     alias: 'controller.aperitivlist',
 
     onAdd: function () {
-        this.redirectTo('aperitiv/create/where');
+        Aperitiv.getApplication().getMainView().getController().internalRedirect('aperitiv', 'create', 'where');
     }
 });

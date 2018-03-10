@@ -11,7 +11,7 @@ Ext.define('Aperitiv.view.login.LoginController', {
         me.submitLogin('asgdhavdshxjasvjhdvajshd')
             .then(function (token) {
                 let user = me.getViewModel().get('jwtPayload');
-                me.redirectTo(user.name ? 'aperitiv' : 'info');
+                Aperitiv.getApplication().getMainView().getController().internalRedirect(user.name ? 'aperitiv' : 'info');
             });
     },
 

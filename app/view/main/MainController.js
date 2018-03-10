@@ -30,18 +30,23 @@ Ext.define('Aperitiv.view.main.MainController', {
     },
 
     onBeforeRoute: function (action, route) {
+        if (this.skipRoute) {
+            this.skipRoute = false;
+            return false;
+        }
+
         let user = this.getViewModel().get('jwtPayload');
         if (route.getName() !== 'login') {
             if (!user) {
-                this.redirectTo('login');
+                this.internalRedirect('login');
                 action.stop();
             } else if (!user.name && route.getName() !== 'info') {
-                this.redirectTo('info');
+                this.internalRedirect('info');
                 action.stop();
             }
         } else {
             if (user) {
-                this.redirectTo(user.name ? 'aperitiv' : 'info');
+                this.internalRedirect(user.name ? 'aperitiv' : 'info');
                 action.stop();
             }
         }
@@ -75,7 +80,6 @@ Ext.define('Aperitiv.view.main.MainController', {
                 xtype: 'aperitiv'
             });
         }
-        Ext.resumeLayouts(true);
 
         switch (page) {
             case 'create':
@@ -95,6 +99,23 @@ Ext.define('Aperitiv.view.main.MainController', {
                 aperitivView.setTitle(Translations.localize('{title}'));
                 break;
         }
+        Ext.resumeLayouts(true);
+    },
+
+    internalRedirect: function (pkg, page, section) {
+        switch (pkg) {
+            case 'login':
+                this.onLogin();
+                break;
+            case 'info':
+                this.onInfo();
+                break;
+            case 'aperitiv':
+                this.onHome(page, section);
+                break;
+        }
+        this.skipRoute = true;
+        this.redirectTo(Ext.Array.clean([pkg, page, section]).join('/'));
     },
 
     loadContacts: function () {
@@ -153,6 +174,6 @@ Ext.define('Aperitiv.view.main.MainController', {
 
     onLogout: function () {
         Aperitiv.getApplication().logout();
-        this.redirectTo('login');
+        this.internalRedirect('login');
     }
 });
