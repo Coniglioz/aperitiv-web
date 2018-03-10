@@ -21,6 +21,11 @@
   "list": {
     "title": "Aperitiv"
   },
+  "create": {
+    "where": {
+      "title": "Dove andiamo?"
+    }
+  },
   "countries": {
     "ab": "Abkhazia",
     "af": "Afghanistan",

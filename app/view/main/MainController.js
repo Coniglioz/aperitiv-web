@@ -11,7 +11,15 @@ Ext.define('Aperitiv.view.main.MainController', {
         },
         'aperitiv': {
             before: 'loadContacts',
-            action: 'onList'
+            action: 'onHome'
+        },
+        'aperitiv/:page': {
+            before: 'loadContacts',
+            action: 'onHome'
+        },
+        'aperitiv/:page/:section': {
+            before: 'loadContacts',
+            action: 'onHome'
         }
     },
 
@@ -57,20 +65,60 @@ Ext.define('Aperitiv.view.main.MainController', {
         Ext.resumeLayouts(true);
     },
 
-    onList: function () {
+    onHome: function (page, section) {
+        let aperitivView = this.lookupReference('aperitiv');
+
         Ext.suspendLayouts();
-        this.getView().removeAll(true, true);
-        this.getView().add({
-            xtype: 'aperitiv'
-        });
+        if (!aperitivView) {
+            this.getView().removeAll(true, true);
+            aperitivView = this.getView().add({
+                xtype: 'aperitiv'
+            });
+        }
         Ext.resumeLayouts(true);
+
+        switch (page) {
+            case 'create':
+                aperitivView.setActiveItem(1);
+                let createView = aperitivView.down('#aperitivCreateWhere');
+                switch (section) {
+                    case 'where':
+                    default:
+                        createView.setActiveItem(0);
+                        aperitivView.setTitle(Translations.localize('{create.where.title}'));
+                        break;
+                }
+                break;
+            case 'list':
+            default:
+                aperitivView.setActiveItem(0);
+                aperitivView.setTitle(Translations.localize('{title}'));
+                break;
+        }
     },
 
     loadContacts: function () {
         let deferred = new Ext.Deferred();
 
-        if (Ext.platformTags.desktop) {
-            deferred.reject();
+        if (!navigator || !navigator.contacts) {
+            Ext.Ajax.request({
+                url: BACKEND.URL + '/api/contact/check',
+                method: 'POST',
+                jsonData: {
+                    contacts: []
+                },
+                callback: function (options, success, response) {
+                    if (success) {
+                        let result = Ext.decode(response.responseText, true),
+                            store = Ext.data.StoreManager.lookup('contacts');
+                        store.loadData(result.data);
+                        deferred.resolve();
+                    } else {
+                        window.alert('Errore check contatti');
+                        deferred.reject('Errore check contatti');
+                    }
+                }
+            });
         } else {
             let options = new ContactFindOptions();
             options.multiple = true;

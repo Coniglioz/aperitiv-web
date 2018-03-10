@@ -19,7 +19,7 @@ Ext.define('Aperitiv.view.login.Login', {
             },
             ui: 'action',
             iconAlign: 'right',
-            iconCls: 'x-fa fa-arrow-right',
+            iconCls: 'icon-chevron-right',
             handler: 'onSubmit'
         }]
     },
