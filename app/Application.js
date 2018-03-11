@@ -27,6 +27,13 @@ Ext.define('Aperitiv.Application', {
 
     stores: ['Contacts'],
 
+    launch: function () {
+        this.geo = Ext.create('Ext.util.Geolocation', {
+            autoUpdate: false
+        });
+        this.geo.updateLocation();
+    },
+
     getLang: function () {
         let lang = location.href.match(/locale=([\w-]+)/);
         return (lang && lang[1]) || 'it';

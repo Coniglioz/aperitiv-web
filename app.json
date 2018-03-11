@@ -12,7 +12,7 @@
             }
         }
     },
-                
+
     "name": "Aperitiv",
     "namespace": "Aperitiv",
     "version": "1.0.0.0",
@@ -29,9 +29,7 @@
      *          "charts"
      *      ]
      */
-    "requires": [
-        "font-awesome"
-    ],
+    "requires": [],
 
     /**
      * The relative path to the application's markup file (html, jsp, asp, etc.).
@@ -93,7 +91,7 @@
          *         // The file used to save sass variables edited via Sencha Inspector and Sencha Themer.
          *         // This file will automatically be applied to the end of the scss build.
          *         "var": "sass/save.scss",
-         *      
+         *
          *         // The directory used to save generated sass sources.
          *         // This directory will automatically be applied to the end of the scss build.
          *         "src": "sass/save"
@@ -373,7 +371,7 @@
      *          "css": "${app.output.resources}/${app.name}-all.css",
      *          "js": {
      *              "path": "app.js",
-     *              // This setting constrols the output language level.  Set to 'ES6' to 
+     *              // This setting constrols the output language level.  Set to 'ES6' to
      *              // disable the transpiler
      *              "version": "ES5"
      *          },
@@ -495,5 +493,15 @@
      * Uniquely generated id for this application, used as prefix for localStorage keys.
      * Normally you should never change this value.
      */
-    "id": "f77dee79-8f7e-40e4-85e5-29d1b5ac577f"
+    "id": "f77dee79-8f7e-40e4-85e5-29d1b5ac577f",
+
+    /**
+     * Parameters for mashup templates
+     */
+    "mashup": {
+        "aperitivcreatewhere": {
+              "key": "AIzaSyClBq4utv9V-iZv62UlsgX6N0PSp_pWmHU",
+              "libraries": "places"
+          }
+    }
 }

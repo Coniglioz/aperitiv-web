@@ -23,7 +23,8 @@
   },
   "create": {
     "where": {
-      "title": "Dove andiamo?"
+      "title": "Dove andiamo?",
+      "searchLocation": "Cerca posto"
     }
   },
   "countries": {
