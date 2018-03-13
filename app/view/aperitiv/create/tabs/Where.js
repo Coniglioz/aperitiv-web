@@ -54,14 +54,40 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
         }
     }, {
         xtype: 'container',
-        itemId: 'locationPickerContainer',
-        layout: 'fit',
-        flex: 1
+        scrollable: 'vertical',
+        flex: 1,
+        items: [{
+            xtype: 'container',
+            itemId: 'locationPickerContainer'
+        }, {
+            xtype: 'container',
+            itemId: 'otherResultsContainer'
+        }]
     }],
 
     listeners: {
         activate: function () {
             Aperitiv.getApplication().geo.updateLocation();
         }
+    },
+
+    getPlacePredictions: function (input) {
+        let deferred = new Ext.Deferred(),
+            service = new google.maps.places.AutocompleteService(),
+            params = {};
+
+        if (!Ext.isEmpty(input)) {
+            params.input = input;
+            params.location = new google.maps.LatLng(Aperitiv.getApplication().geo.getLatitude(), Aperitiv.getApplication().geo.getLongitude());
+            params.radius = 10000;
+            params.types = ['establishment'];
+            service.getPlacePredictions(params, function (result) {
+                deferred.resolve(result);
+            });
+        } else {
+            deferred.resolve([]);
+        }
+
+        return deferred.promise;
     }
 });

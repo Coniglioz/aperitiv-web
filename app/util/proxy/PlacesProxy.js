@@ -54,6 +54,7 @@ Ext.define('Aperitiv.util.proxy.PlacesProxy', {
             if (query.length && !Ext.isEmpty(query[0])) {
                 params.keyword = query[0];
                 params.location = new google.maps.LatLng(Aperitiv.getApplication().geo.getLatitude(), Aperitiv.getApplication().geo.getLongitude());
+                params.types = ['bar', 'cafe', 'restaurant', 'liquor_store', 'supermarket', 'bakery', 'meal_delivery', 'meal_takeaway', 'night_club', 'park', 'parking', 'bowling_alley'];
                 params.rankBy = google.maps.places.RankBy.DISTANCE;
                 service.nearbySearch(params, function (result, status) {
                     switch (status) {
