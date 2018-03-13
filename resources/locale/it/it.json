@@ -23,8 +23,8 @@
   },
   "create": {
     "where": {
-      "title": "Dove andiamo?",
-      "searchLocation": "Cerca posto"
+      "title": "Dove ci troviamo per l'aperitivo?",
+      "searchLocation": "Cerca locale o indirizzo"
     }
   },
   "countries": {

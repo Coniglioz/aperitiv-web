@@ -8,60 +8,63 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
         '//maps.googleapis.com/maps/api/js?key={key}&libraries={libraries}'
     ],
 
+    referenceHolder: true,
+    defaultListenerScope: true,
+
     layout: {
         type: 'vbox',
         align: 'stretch'
     },
 
     items: [{
-        id: 'powered-by-google'
-    }, {
-        xtype: 'combobox',
+        xtype: 'textfield',
         name: 'location',
         localized: {
             placeholder: '{create.where.searchLocation}',
         },
-        hideTrigger: true,
-        picker: {
-            xtype: 'list',
-            cls: 'aperitiv-location-picker',
-            floated: false,
-            setValue: Ext.emptyFn,
-            selectable: {
-                mode: 'single',
-                deselectable: false
-            },
-            itemTpl: '<div><span class="{iconCls}"></span> <b>{name}</b> <small>{vicinity}</small></div>'
-        },
-        queryMode: 'remote',
-        valueField: 'place_id',
-        displayField: 'name',
-        store: {
-            model: 'Aperitiv.model.Place',
-            proxy: {
-                type: 'google-places'
-            }
-        },
         listeners: {
-            pickercreate: function (cmp, picker) {
-                cmp.pickerType = null;
-                picker.setStore(cmp.getStore());
-                cmp.up().down('#locationPickerContainer').add(picker);
-                picker.on('beforehide', function () {
-                    return false;
-                })
-            }
+            buffer: 500,
+            change: 'onSearchChange'
         }
+    }, {
+        reference: 'googleSearchField'
     }, {
         xtype: 'container',
         scrollable: 'vertical',
         flex: 1,
         items: [{
-            xtype: 'container',
-            itemId: 'locationPickerContainer'
+            xtype: 'list',
+            reference: 'placesResultsList',
+            cls: 'aperitiv-location-picker',
+            store: {
+                model: 'Aperitiv.model.Place'
+            },
+            // selectable: {
+            //     mode: 'single',
+            //     deselectable: false
+            // },
+            itemTpl: '<div><span class="{iconCls}"></span> <b>{name}</b> <small>{vicinity}</small></div>'
         }, {
-            xtype: 'container',
-            itemId: 'otherResultsContainer'
+            xtype: 'list',
+            reference: 'addressesResultsList',
+            cls: 'aperitiv-location-picker',
+            store: {
+                model: 'Aperitiv.model.PlaceAutoComplete'
+            },
+            // selectable: {
+            //     mode: 'single',
+            //     deselectable: false
+            // },
+            itemTpl: '<div><span class="{iconCls}"></span> {description}</div>'
+        }, {
+            xtype: 'list',
+            reference: 'otherResultsList',
+            cls: 'aperitiv-location-picker',
+            // selectable: {
+            //     mode: 'single',
+            //     deselectable: false
+            // },
+            itemTpl: '<div><span class="{iconCls}"></span> <b>{name}</b> <small>{vicinity}</small></div>'
         }]
     }],
 
@@ -69,6 +72,47 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
         activate: function () {
             Aperitiv.getApplication().geo.updateLocation();
         }
+    },
+
+    onSearchChange: function (cmp, newValue, oldValue) {
+        let placesStore = this.lookupReference('placesResultsList').getStore(),
+            addressesStore = this.lookupReference('addressesResultsList').getStore();
+
+        Ext.Promise.all([this.searchPlaces(newValue), this.getPlacePredictions(newValue)])
+            .then(function (results) {
+                Ext.suspendLayouts();
+                placesStore.loadData(results[0]);
+                addressesStore.loadData(results[1]);
+                Ext.resumeLayouts(true);
+            });
+    },
+
+    searchPlaces: function (input) {
+        let deferred = new Ext.Deferred(),
+            service = new google.maps.places.PlacesService(this.lookupReference('googleSearchField').element.dom),
+            params = {};
+
+        if (!Ext.isEmpty(input)) {
+            params.keyword = input;
+            params.location = new google.maps.LatLng(Aperitiv.getApplication().geo.getLatitude(), Aperitiv.getApplication().geo.getLongitude());
+            params.types = ['bar', 'cafe', 'restaurant', 'liquor_store', 'supermarket', 'bakery', 'meal_delivery', 'meal_takeaway', 'night_club', 'park', 'parking', 'bowling_alley'];
+            params.rankBy = google.maps.places.RankBy.DISTANCE;
+            service.nearbySearch(params, function (result, status) {
+                switch (status) {
+                    case google.maps.places.PlacesServiceStatus.OK:
+                    case google.maps.places.PlacesServiceStatus.ZERO_RESULTS:
+                        deferred.resolve(result);
+                        break;
+                    default:
+                        deferred.reject(status);
+                        break;
+                }
+            });
+        } else {
+            deferred.resolve([]);
+        }
+
+        return deferred.promise;
     },
 
     getPlacePredictions: function (input) {
