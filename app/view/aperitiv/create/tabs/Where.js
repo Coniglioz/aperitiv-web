@@ -33,17 +33,19 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
         scrollable: 'vertical',
         flex: 1,
         items: [{
+            xtype: 'label',
+            html: 'Locali nelle vicinanze'
+        }, {
             xtype: 'list',
             reference: 'placesResultsList',
             cls: 'aperitiv-location-picker',
             store: {
                 model: 'Aperitiv.model.Place'
             },
-            // selectable: {
-            //     mode: 'single',
-            //     deselectable: false
-            // },
-            itemTpl: '<div><span class="{iconCls}"></span> <b>{name}</b> <small>{vicinity}</small></div>'
+            itemTpl: '<div class="aperitiv-location-picker-icon"><span class="{iconCls}"></span></div><div class="aperitiv-location-picker-text"><b>{name}</b><br><small>{vicinity}</small></div>'
+        }, {
+            xtype: 'label',
+            html: 'Altri indirizzi'
         }, {
             xtype: 'list',
             reference: 'addressesResultsList',
@@ -51,19 +53,11 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
             store: {
                 model: 'Aperitiv.model.PlaceAutoComplete'
             },
-            // selectable: {
-            //     mode: 'single',
-            //     deselectable: false
-            // },
-            itemTpl: '<div><span class="{iconCls}"></span> {description}</div>'
+            itemTpl: '<div class="aperitiv-location-picker-icon"><span class="{iconCls}"></span></div><div class="aperitiv-location-picker-text"><b>{name}</b><br><small>{vicinity}</small></div>'
         }, {
             xtype: 'list',
             reference: 'otherResultsList',
             cls: 'aperitiv-location-picker',
-            // selectable: {
-            //     mode: 'single',
-            //     deselectable: false
-            // },
             itemTpl: '<div><span class="{iconCls}"></span> <b>{name}</b> <small>{vicinity}</small></div>'
         }]
     }],

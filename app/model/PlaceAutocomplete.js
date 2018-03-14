@@ -27,6 +27,18 @@ Ext.define('Aperitiv.model.PlaceAutoComplete', {
     }, {
         name: 'types'
     }, {
+        name: 'name',
+        type: 'string',
+        calculate: function (data) {
+            return data && data.structured_formatting && data.structured_formatting.main_text;
+        }
+    }, {
+        name: 'vicinity',
+        type: 'string',
+        calculate: function (data) {
+            return data && data.structured_formatting && data.structured_formatting.secondary_text;
+        }
+    }, {
         name: 'iconCls',
         calculate: function () {
             return 'icon-map-marker';

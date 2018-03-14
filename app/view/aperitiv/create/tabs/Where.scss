@@ -1,4 +1,27 @@
 .aperitiv-location-picker .x-listitem {
   font-size: 20px;
   line-height: 24px;
+
+  .x-inner-el {
+    max-width: 100%;
+  }
+  .x-innerhtml {
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .aperitiv-location-picker-icon {
+    width: 30px;
+    height: 45px;
+    line-height: 45px;
+  }
+
+  .aperitiv-location-picker-text {
+    flex: 1;
+    height: 45px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
