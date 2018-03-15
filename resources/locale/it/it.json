@@ -24,7 +24,13 @@
   "create": {
     "where": {
       "title": "Dove ci troviamo per l'aperitivo?",
-      "searchLocation": "Cerca locale o indirizzo"
+      "searchLocation": "Cerca locale o indirizzo",
+      "nearPlaces": "Locali nelle vicinanze",
+      "addressPlaces": "Altri indirizzi",
+      "otherPlaces": {
+        "freeTitle": "Non importa...",
+        "freeText": "Accetto proporte sul posto!"
+      }
     }
   },
   "countries": {

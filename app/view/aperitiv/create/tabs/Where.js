@@ -31,10 +31,15 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
     }, {
         xtype: 'container',
         scrollable: 'vertical',
+        reference: 'placesResultsContainer',
         flex: 1,
         items: [{
             xtype: 'label',
-            html: 'Locali nelle vicinanze'
+            reference: 'placesResultsLabel',
+            localized: {
+                html: '{create.where.nearPlaces}',
+            },
+            hidden: true
         }, {
             xtype: 'list',
             reference: 'placesResultsList',
@@ -42,10 +47,17 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
             store: {
                 model: 'Aperitiv.model.Place'
             },
-            itemTpl: '<div class="aperitiv-location-picker-icon"><span class="{iconCls}"></span></div><div class="aperitiv-location-picker-text"><b>{name}</b><br><small>{vicinity}</small></div>'
+            itemTpl: '<div class="aperitiv-location-picker-icon"><span class="{iconCls}"></span></div><div class="aperitiv-location-picker-text"><b>{name}</b><br><small>{vicinity}</small></div>',
+            listeners: {
+                select: 'onListSelect'
+            }
         }, {
             xtype: 'label',
-            html: 'Altri indirizzi'
+            reference: 'addressesResultsLabel',
+            localized: {
+                html: '{create.where.addressPlaces}'
+            },
+            hidden: true
         }, {
             xtype: 'list',
             reference: 'addressesResultsList',
@@ -53,31 +65,55 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
             store: {
                 model: 'Aperitiv.model.PlaceAutoComplete'
             },
-            itemTpl: '<div class="aperitiv-location-picker-icon"><span class="{iconCls}"></span></div><div class="aperitiv-location-picker-text"><b>{name}</b><br><small>{vicinity}</small></div>'
+            itemTpl: '<div class="aperitiv-location-picker-icon"><span class="{iconCls}"></span></div><div class="aperitiv-location-picker-text"><b>{name}</b><br><small>{vicinity}</small></div>',
+            listeners: {
+                select: 'onListSelect'
+            }
         }, {
             xtype: 'list',
             reference: 'otherResultsList',
             cls: 'aperitiv-location-picker',
-            itemTpl: '<div><span class="{iconCls}"></span> <b>{name}</b> <small>{vicinity}</small></div>'
+            store: {
+                fields: ['id', 'text', 'iconCls']
+            },
+            itemTpl: '<div class="aperitiv-location-picker-icon"><span class="{iconCls}"></span></div><div class="aperitiv-location-picker-text"><b>{title}</b><br><small>{text}</small></div>',
+            listeners: {
+                select: 'onListSelect'
+            }
         }]
     }],
 
     listeners: {
         activate: function () {
             Aperitiv.getApplication().geo.updateLocation();
+            this.lookupReference('otherResultsList').getStore().loadData([{
+                id: 'free',
+                title: Translations.localize('{create.where.otherPlaces.freeTitle}'),
+                text: Translations.localize('{create.where.otherPlaces.freeText}'),
+                iconCls: 'icon-map-marker-crossed'
+            }]);
         }
     },
 
     onSearchChange: function (cmp, newValue, oldValue) {
         let placesStore = this.lookupReference('placesResultsList').getStore(),
-            addressesStore = this.lookupReference('addressesResultsList').getStore();
+            placesLabel = this.lookupReference('placesResultsLabel'),
+            addressesStore = this.lookupReference('addressesResultsList').getStore(),
+            resultsContainer = this.lookupReference('placesResultsContainer'),
+            addressesLabel = this.lookupReference('addressesResultsLabel');
 
+        resultsContainer.mask(Aperitiv.getApplication().getMaskConfig());
         Ext.Promise.all([this.searchPlaces(newValue), this.getPlacePredictions(newValue)])
             .then(function (results) {
                 Ext.suspendLayouts();
                 placesStore.loadData(results[0]);
                 addressesStore.loadData(results[1]);
+                placesLabel.setHidden(Ext.isEmpty(results[0]));
+                addressesLabel.setHidden(Ext.isEmpty(results[1]));
                 Ext.resumeLayouts(true);
+            })
+            .finally(function () {
+                resultsContainer.unmask();
             });
     },
 
@@ -127,5 +163,9 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
         }
 
         return deferred.promise;
+    },
+
+    onListSelect: function (list, selected) {
+        console.log(selected);
     }
 });

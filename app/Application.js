@@ -39,6 +39,15 @@ Ext.define('Aperitiv.Application', {
         return (lang && lang[1]) || 'it';
     },
 
+    getMaskConfig: function () {
+        return {
+            html: '<div class="lds-ring"><div></div><div></div><div></div><div></div></div>',
+            style: {
+                backgroundColor: 'transparent'
+            }
+        };
+    },
+
     onAppUpdate: function () {
         Ext.Msg.confirm('Application Update', 'This application has an update, reload?',
             function (choice) {
