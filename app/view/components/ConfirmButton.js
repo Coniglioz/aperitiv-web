@@ -3,7 +3,7 @@ Ext.define('Aperitiv.components.ConfirmButton', {
     xtype: 'aperitivconfirmbutton',
 
     localized: {
-        text: '{login.confirm}'
+        text: '{confirm}'
     },
 
     ui: 'action',

@@ -84,8 +84,12 @@ Ext.define('Aperitiv.view.main.MainController', {
         switch (page) {
             case 'create':
                 aperitivView.setActiveItem(1);
-                let createView = aperitivView.down('#aperitivCreateWhere');
+                let createView = aperitivView.down('aperitivcreate');
                 switch (section) {
+                    case 'when':
+                        createView.setActiveItem(1);
+                        aperitivView.setTitle(Translations.localize('{create.when.title}'));
+                        break;
                     case 'where':
                     default:
                         createView.setActiveItem(0);

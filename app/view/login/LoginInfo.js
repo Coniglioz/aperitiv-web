@@ -13,13 +13,7 @@ Ext.define('Aperitiv.view.login.LoginInfo', {
         xtype: 'panelheader',
         titlePosition: 0,
         items: [{
-            xtype: 'button',
-            localized: {
-                text: '{logininfo.confirm}'
-            },
-            ui: 'action',
-            iconAlign: 'right',
-            iconCls: 'x-fa fa-arrow-right',
+            xtype: 'aperitivconfirmbutton',
             handler: 'onSubmit'
         }]
     },

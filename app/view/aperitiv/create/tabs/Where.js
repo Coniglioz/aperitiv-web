@@ -27,7 +27,8 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
             change: 'onSearchChange'
         }
     }, {
-        reference: 'googleSearchField'
+        reference: 'googleSearchField',
+        margin: '0 0 10 0'
     }, {
         xtype: 'container',
         scrollable: 'vertical',
@@ -36,6 +37,7 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
         items: [{
             xtype: 'label',
             reference: 'placesResultsLabel',
+            margin: '10 0 0 0',
             localized: {
                 html: '{create.where.nearPlaces}',
             },
@@ -49,11 +51,13 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
             },
             itemTpl: '<div class="aperitiv-location-picker-icon"><span class="{iconCls}"></span></div><div class="aperitiv-location-picker-text"><b>{name}</b><br><small>{vicinity}</small></div>',
             listeners: {
-                select: 'onListSelect'
+                select: 'onListSelect',
+                deselect: 'onListDeselect'
             }
         }, {
             xtype: 'label',
             reference: 'addressesResultsLabel',
+            margin: '10 0 0 0',
             localized: {
                 html: '{create.where.addressPlaces}'
             },
@@ -67,7 +71,15 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
             },
             itemTpl: '<div class="aperitiv-location-picker-icon"><span class="{iconCls}"></span></div><div class="aperitiv-location-picker-text"><b>{name}</b><br><small>{vicinity}</small></div>',
             listeners: {
-                select: 'onListSelect'
+                select: 'onListSelect',
+                deselect: 'onListDeselect'
+            }
+        }, {
+            xtype: 'label',
+            reference: 'otherResultsLabel',
+            margin: '10 0 0 0',
+            localized: {
+                html: '{create.where.otherPlaces.otherPlaces}'
             }
         }, {
             xtype: 'list',
@@ -78,13 +90,15 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
             },
             itemTpl: '<div class="aperitiv-location-picker-icon"><span class="{iconCls}"></span></div><div class="aperitiv-location-picker-text"><b>{title}</b><br><small>{text}</small></div>',
             listeners: {
-                select: 'onListSelect'
+                select: 'onListSelect',
+                deselect: 'onListDeselect'
             }
         }]
     }],
 
     listeners: {
         activate: function () {
+            this.lookupViewModel().set('confirmEnabled', false);
             Aperitiv.getApplication().geo.updateLocation();
             this.lookupReference('otherResultsList').getStore().loadData([{
                 id: 'free',
@@ -166,6 +180,15 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
     },
 
     onListSelect: function (list, selected) {
-        console.log(selected);
+        this.query(`list[reference!=${list.reference}]`).forEach(cmp => cmp.getSelectable().deselectAll());
+        this.lookupViewModel().set('location', selected);
+        this.lookupViewModel().set('confirmEnabled', true);
+    },
+
+    onListDeselect: function (list, selected) {
+        if (!this.query(`list[reference!=${list.reference}]`).some(cmp => cmp.getSelectable().getSelectionCount())) {
+            this.lookupViewModel().set('location', null);
+            this.lookupViewModel().set('confirmEnabled', false);
+        }
     }
 });

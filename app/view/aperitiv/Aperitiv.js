@@ -10,7 +10,8 @@ Ext.define('Aperitiv.view.aperitiv.Aperitiv', {
     },
 
     header: {
-        xtype: 'panelheader'
+        xtype: 'panelheader',
+        titlePosition: 0
     },
 
     items: [{

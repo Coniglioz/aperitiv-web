@@ -1,11 +1,11 @@
 {
   "title": "Aperitiv",
+  "confirm": "Avanti",
   "menu": {
     "logout": "Logout"
   },
   "login": {
     "title": "Accedi",
-    "confirm": "Avanti",
     "helpText": "Seleziona la nazione e inserisci il tuo numero di telefono completo.",
     "countryLabel": "Nazione",
     "countryCodeLabel": "Codice",
@@ -13,7 +13,6 @@
   },
   "logininfo": {
     "title": "Info",
-    "confirm": "Avanti",
     "helpText": "Scegli un nome e il tuo drink preferito.",
     "nameLabel": "Nome",
     "infoLabel": "Drink preferito"
@@ -26,11 +25,16 @@
       "title": "Dove ci troviamo per l'aperitivo?",
       "searchLocation": "Cerca locale o indirizzo",
       "nearPlaces": "Locali nelle vicinanze",
-      "addressPlaces": "Altri indirizzi",
+      "addressPlaces": "Indirizzi",
       "otherPlaces": {
+        "otherPlaces": "Altro",
         "freeTitle": "Non importa...",
         "freeText": "Accetto proporte sul posto!"
       }
+    },
+    "when": {
+      "title": "Per che ora?",
+      "day": "Giorno"
     }
   },
   "countries": {
