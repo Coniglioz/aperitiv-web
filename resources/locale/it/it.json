@@ -34,7 +34,8 @@
     },
     "when": {
       "title": "Per che ora?",
-      "day": "Giorno"
+      "date": "Giorno",
+      "time": "Ora"
     }
   },
   "countries": {

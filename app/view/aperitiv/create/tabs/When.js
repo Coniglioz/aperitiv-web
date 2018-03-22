@@ -11,10 +11,18 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.When', {
     },
 
     items: [{
-        xtype: 'datefield',
-        name: 'day',
+        xtype: 'aperitivinputfield',
+        inputType: 'date',
+        name: 'date',
         localized: {
-            placeholder: '{create.when.day}'
+            label: '{create.when.date}'
+        }
+    }, {
+        xtype: 'aperitivinputfield',
+        inputType: 'time',
+        name: 'time',
+        localized: {
+            label: '{create.when.time}'
         }
     }],
 
