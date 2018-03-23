@@ -1,6 +1,11 @@
 Ext.define('Aperitiv.components.InputField', {
     extend: 'Ext.field.Text',
     xtype: 'aperitivdatefield',
+    requires: [
+        'Ext.data.validator.Date',
+        'Ext.field.trigger.Date',
+        'Ext.panel.Date'
+    ],
 
     cls: 'aperitiv-date-field',
 
