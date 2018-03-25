@@ -5,7 +5,7 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
     mixins: ['Ext.mixin.Mashup'],
 
     requiredScripts: [
-        '//maps.googleapis.com/maps/api/js?key={key}&libraries={libraries}'
+        'https://maps.googleapis.com/maps/api/js?key={key}&libraries={libraries}'
     ],
 
     referenceHolder: true,
