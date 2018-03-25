@@ -127,7 +127,13 @@ Ext.define('Aperitiv.view.main.MainController', {
     },
 
     loadContacts: function () {
-        let deferred = new Ext.Deferred();
+        let deferred = new Ext.Deferred(),
+            viewModel = this.getViewModel(),
+            contactsLoaded = !Ext.isEmpty(viewModel.get('contacts'));
+
+        if (contactsLoaded) {
+            deferred.resolve();
+        }
 
         if (!navigator || !navigator.contacts) {
             Ext.Ajax.request({
@@ -153,6 +159,7 @@ Ext.define('Aperitiv.view.main.MainController', {
             options.multiple = true;
             options.hasPhoneNumber = true;
             navigator.contacts.find(['*'], function (contacts) {
+                viewModel.set('contacts', contacts);
                 Ext.Ajax.request({
                     url: BACKEND.URL + '/api/contact/check',
                     method: 'POST',
