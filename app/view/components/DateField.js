@@ -1,4 +1,4 @@
-Ext.define('Aperitiv.components.InputField', {
+Ext.define('Aperitiv.components.DateField', {
     extend: 'Ext.field.Text',
     xtype: 'aperitivdatefield',
     requires: [
@@ -18,10 +18,10 @@ Ext.define('Aperitiv.components.InputField', {
         }
     },
 
+    clearable: false,
     labelAlign: 'top',
 
     inputType: 'date',
-    editable: false,
     classCls: Ext.baseCSSPrefix + 'datepickerfield',
     parseValidator: 'date',
 

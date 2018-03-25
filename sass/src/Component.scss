@@ -1,5 +1,9 @@
 @import "Linearicons";
 
+.x-timetrigger .x-font-icon {
+  @include font-icon($timetrigger-icon);
+}
+
 .lds-ring {
   display: inline-block;
   position: relative;

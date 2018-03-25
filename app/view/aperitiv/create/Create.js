@@ -13,6 +13,9 @@ Ext.define('Aperitiv.view.aperitiv.create.Create', {
     }, {
         xtype: 'aperitivcreatewhen',
         itemId: 'aperitivCreateWhen'
+    }, {
+        xtype: 'aperitivcreatewho',
+        itemId: 'aperitivCreateWhen'
     }],
 
     listeners: {

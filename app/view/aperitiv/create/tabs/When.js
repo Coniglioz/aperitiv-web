@@ -14,21 +14,31 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.When', {
         xtype: 'aperitivdatefield',
         value: new Date(),
         name: 'date',
+        required: true,
         localized: {
             label: '{create.when.date}'
+        },
+        listeners: {
+            change: 'onChange'
         }
     }, {
         xtype: 'aperitivtimefield',
         value: new Date(),
+        required: true,
         name: 'time',
         localized: {
             label: '{create.when.time}'
+        },
+        listeners: {
+            change: 'onChange'
         }
     }],
 
     listeners: {
-        activate: function () {
-            this.lookupViewModel().set('confirmEnabled', false);
-        }
+        activate: 'onChange'
+    },
+
+    onChange: function () {
+        this.lookupViewModel().set('confirmEnabled', this.isValid());
     }
 });

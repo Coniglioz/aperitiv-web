@@ -1,10 +1,11 @@
 Ext.define('Aperitiv.components.TimeField', {
-    extend: 'Aperitiv.components.InputField',
+    extend: 'Aperitiv.components.DateField',
     xtype: 'aperitivtimefield',
 
     triggers: {
         expand: {
-            type: 'date'
+            type: 'trigger',
+            cls: Ext.baseCSSPrefix + 'timetrigger',
         }
     },
     dateFormat: 'H:i',

@@ -90,6 +90,10 @@ Ext.define('Aperitiv.view.main.MainController', {
                         createView.setActiveItem(1);
                         aperitivView.setTitle(Translations.localize('{create.when.title}'));
                         break;
+                    case 'who':
+                        createView.setActiveItem(2);
+                        aperitivView.setTitle(Translations.localize('{create.who.title}'));
+                        break;
                     case 'where':
                     default:
                         createView.setActiveItem(0);

@@ -36,6 +36,9 @@
       "title": "Per che ora?",
       "date": "Giorno",
       "time": "Ora"
+    },
+    "who": {
+      "title": "Chi potrebbe starci?"
     }
   },
   "countries": {

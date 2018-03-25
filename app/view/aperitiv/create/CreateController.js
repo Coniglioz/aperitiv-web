@@ -23,10 +23,17 @@ Ext.define('Aperitiv.view.aperitiv.create.CreateController', {
             case 'widget/component/container/panel/fieldpanel/formpanel/aperitivcreatewhere':
                 this.onConfirmWhere();
                 break;
+            case 'widget/component/container/panel/fieldpanel/formpanel/aperitivcreatewhen':
+                this.onConfirmWhen();
+                break;
         }
     },
 
     onConfirmWhere: function () {
         Aperitiv.getApplication().getMainView().getController().internalRedirect('aperitiv', 'create', 'when');
+    },
+
+    onConfirmWhen: function () {
+        Aperitiv.getApplication().getMainView().getController().internalRedirect('aperitiv', 'create', 'who');
     }
 });
