@@ -38,7 +38,8 @@
       "time": "Ora"
     },
     "who": {
-      "title": "Chi potrebbe starci?"
+      "title": "Chi potrebbe starci?",
+      "confirmButtonText": "Conferma"
     }
   },
   "countries": {

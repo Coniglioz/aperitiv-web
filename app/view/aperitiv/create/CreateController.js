@@ -18,14 +18,22 @@ Ext.define('Aperitiv.view.aperitiv.create.CreateController', {
         this.confirmBtn = null;
     },
 
+    onActiveItemChange: function (view, activeItem) {
+        if (activeItem.isXType('aperitivcreatewho')) {
+            this.confirmBtn.setText(Translations.localize('{create.who.confirmButtonText}'));
+        } else {
+            this.confirmBtn.setText(this.confirmBtn.getInitialConfig('text'));
+        }
+    },
+
     onConfirm: function () {
-        switch (this.getView().getActiveItem().getXTypes()) {
-            case 'widget/component/container/panel/fieldpanel/formpanel/aperitivcreatewhere':
-                this.onConfirmWhere();
-                break;
-            case 'widget/component/container/panel/fieldpanel/formpanel/aperitivcreatewhen':
-                this.onConfirmWhen();
-                break;
+        let activeItem = this.getView().getActiveItem();
+        if (activeItem.isXType('aperitivcreatewhere')) {
+            this.onConfirmWhere();
+        } else if (activeItem.isXType('aperitivcreatewhen')) {
+            this.onConfirmWhen();
+        } else if (activeItem.isXType('aperitivcreatewho')) {
+            this.onConfirmWho();
         }
     },
 
@@ -35,5 +43,40 @@ Ext.define('Aperitiv.view.aperitiv.create.CreateController', {
 
     onConfirmWhen: function () {
         Aperitiv.getApplication().getMainView().getController().internalRedirect('aperitiv', 'create', 'who');
+    },
+
+    onConfirmWho: function () {
+        let me = this;
+
+        me.getView().mask(Aperitiv.getApplication().getMaskConfig());
+        me.createAperitiv(me.getViewModel().get('location'), me.getViewModel().get('date'), me.getViewModel().get('time'), me.getViewModel().get('friends'))
+            .then(function () {
+                Aperitiv.getApplication().getMainView().getController().internalRedirect('aperitiv', 'list');
+            })
+            .always(() => me.getView().unmask());
+    },
+
+    createAperitiv: function (location, date, time, friends) {
+        let deferred = new Ext.Deferred();
+
+        Ext.Ajax.request({
+            url: BACKEND.URL + '/api/event',
+            method: 'POST',
+            jsonData: {
+                location: location.getData(),
+                date: Ext.Date.format(date, 'Y-m-d'),
+                time: Ext.Date.format(time, 'H:i:s'),
+                friends: friends.map(friend => friend.getData())
+            },
+            callback: function (options, success, response) {
+                if (success) {
+                    deferred.resolve();
+                } else {
+                    deferred.reject('Errore creazione evento');
+                }
+            }
+        });
+
+        return deferred.promise;
     }
 });

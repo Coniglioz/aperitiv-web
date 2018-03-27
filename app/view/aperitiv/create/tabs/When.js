@@ -40,5 +40,9 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.When', {
 
     onChange: function () {
         this.lookupViewModel().set('confirmEnabled', this.isValid());
+        if (this.isValid()) {
+            this.lookupViewModel().set('date', this.down('aperitivdatefield').getValue());
+            this.lookupViewModel().set('time', this.down('aperitivtimefield').getValue());
+        }
     }
 });

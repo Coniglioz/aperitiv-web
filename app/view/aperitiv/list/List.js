@@ -4,6 +4,21 @@ Ext.define('Aperitiv.view.aperitiv.list.List', {
 
     controller: 'aperitivlist',
 
+    store: {
+        model: 'Aperitiv.model.Aperitiv',
+        proxy: {
+            type: 'ajax',
+            url: BACKEND.URL + '/api/event',
+            reader: {
+                type: 'json',
+                rootProperty: 'events'
+            }
+        }
+    },
+
+    loadingText: false,
+    itemTpl: '{id}',
+
     doDestroy: function () {
         this.addButton.destroy();
         this.addButton = null;
@@ -11,21 +26,7 @@ Ext.define('Aperitiv.view.aperitiv.list.List', {
     },
 
     listeners: {
-        deactivate: function (cmp) {
-            this.addButton.hide();
-        },
-        activate: function () {
-            this.addButton = this.addButton || Ext.create('Ext.Button', {
-                iconCls: 'icon-glass2 icon-2x',
-                floated: true,
-                handler: this.getController().onAdd,
-                scope: this.getController(),
-                ui: 'action round',
-                padding: 15,
-                bottom: 20,
-                right: 20
-            });
-            this.addButton.show();
-        }
+        deactivate: 'onDeactivate',
+        activate: 'onActivate'
     }
 });

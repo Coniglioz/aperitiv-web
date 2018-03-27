@@ -20,6 +20,7 @@ Ext.define('Aperitiv.view.aperitiv.create.Create', {
 
     listeners: {
         activate: 'onActivate',
-        deactivate: 'onDeactivate'
+        deactivate: 'onDeactivate',
+        activeItemchange: 'onActiveItemChange'
     }
 });

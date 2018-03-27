@@ -20,6 +20,8 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Who', {
     },
 
     onSelectionChange: function (list) {
-        this.lookupViewModel().set('confirmEnabled', !Ext.isEmpty(list.getSelectable().getSelections()));
+        let selections = list.getSelectable().getSelections();
+        this.lookupViewModel().set('confirmEnabled', !Ext.isEmpty(selections));
+        this.lookupViewModel().set('friends', selections);
     }
 });

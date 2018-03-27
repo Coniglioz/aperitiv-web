@@ -4,6 +4,9 @@ Ext.define('Aperitiv.view.aperitiv.create.CreateModel', {
 
     data: {
         confirmEnabled: false,
-        location: null
+        location: null,
+        date: null,
+        time: null,
+        friends: null
     }
 });
