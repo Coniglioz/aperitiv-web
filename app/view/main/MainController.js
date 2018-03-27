@@ -10,15 +10,12 @@ Ext.define('Aperitiv.view.main.MainController', {
             action: 'onInfo'
         },
         'aperitiv': {
-            before: 'loadContacts',
             action: 'onHome'
         },
         'aperitiv/:page': {
-            before: 'loadContacts',
             action: 'onHome'
         },
         'aperitiv/:page/:section': {
-            before: 'loadContacts',
             action: 'onHome'
         }
     },
@@ -124,67 +121,6 @@ Ext.define('Aperitiv.view.main.MainController', {
         }
         this.skipRoute = true;
         this.redirectTo(Ext.Array.clean([pkg, page, section]).join('/'));
-    },
-
-    loadContacts: function () {
-        let deferred = new Ext.Deferred(),
-            viewModel = this.getViewModel(),
-            contactsLoaded = !Ext.isEmpty(viewModel.get('contacts'));
-
-        if (contactsLoaded) {
-            deferred.resolve();
-        }
-
-        if (!navigator || !navigator.contacts) {
-            Ext.Ajax.request({
-                url: BACKEND.URL + '/api/contact/check',
-                method: 'POST',
-                jsonData: {
-                    contacts: []
-                },
-                callback: function (options, success, response) {
-                    if (success) {
-                        let result = Ext.decode(response.responseText, true),
-                            store = Ext.data.StoreManager.lookup('contacts');
-                        store.loadData(result.data);
-                        deferred.resolve();
-                    } else {
-                        window.alert('Errore check contatti');
-                        deferred.reject('Errore check contatti');
-                    }
-                }
-            });
-        } else {
-            let options = new ContactFindOptions();
-            options.multiple = true;
-            options.hasPhoneNumber = true;
-            navigator.contacts.find(['*'], function (contacts) {
-                viewModel.set('contacts', contacts);
-                Ext.Ajax.request({
-                    url: BACKEND.URL + '/api/contact/check',
-                    method: 'POST',
-                    jsonData: {
-                        contacts: contacts
-                    },
-                    callback: function (options, success, response) {
-                        if (success) {
-                            let result = Ext.decode(response.responseText, true),
-                                store = Ext.data.StoreManager.lookup('contacts');
-                            store.loadData(result.data);
-                            deferred.resolve();
-                        } else {
-                            window.alert('Errore check contatti');
-                            deferred.reject('Errore check contatti');
-                        }
-                    }
-                });
-            }, function (contactError) {
-                window.alert(contactError);
-                deferred.reject(contactError);
-            }, options);
-        }
-
-        return deferred.promise;
     },
 
     onLogout: function () {

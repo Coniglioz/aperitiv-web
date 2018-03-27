@@ -3,6 +3,8 @@ Ext.define('Aperitiv.view.aperitiv.Aperitiv', {
     xtype: 'aperitiv',
     reference: 'aperitiv',
 
+    controller: 'aperitiv',
+
     layout: 'card',
 
     localized: {
