@@ -57,13 +57,21 @@ Ext.define('Aperitiv.view.aperitiv.create.CreateController', {
     },
 
     createAperitiv: function (location, date, time, friends) {
-        let deferred = new Ext.Deferred();
+        let deferred = new Ext.Deferred(),
+            locationData = location.getData();
+
+        if (!Ext.isEmpty(locationData.geometry)) {
+            locationData.geometry = {
+                location: locationData.geometry.location.toJSON(),
+                viewport: locationData.geometry.viewport.toJSON()
+            };
+        }
 
         Ext.Ajax.request({
             url: BACKEND.URL + '/api/event',
             method: 'POST',
             jsonData: {
-                location: location.getData(),
+                location: locationData,
                 date: Ext.Date.format(date, 'Y-m-d'),
                 time: Ext.Date.format(time, 'H:i:s'),
                 friends: friends.map(friend => friend.getData())
