@@ -11,6 +11,7 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
     referenceHolder: true,
     defaultListenerScope: true,
 
+    bodyPadding: 0,
     layout: {
         type: 'vbox',
         align: 'stretch'
@@ -19,6 +20,7 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
     items: [{
         xtype: 'textfield',
         name: 'location',
+        margin: '8 10 0 10',
         localized: {
             placeholder: '{create.where.searchLocation}',
         },
@@ -27,8 +29,7 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
             change: 'onSearchChange'
         }
     }, {
-        reference: 'googleSearchField',
-        margin: '0 0 10 0'
+        reference: 'googleSearchField'
     }, {
         xtype: 'container',
         scrollable: 'vertical',
@@ -37,7 +38,7 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
         items: [{
             xtype: 'label',
             reference: 'placesResultsLabel',
-            margin: '10 0 0 0',
+            margin: '10 10 0 10',
             localized: {
                 html: '{create.where.nearPlaces}',
             },
@@ -57,7 +58,7 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
         }, {
             xtype: 'label',
             reference: 'addressesResultsLabel',
-            margin: '10 0 0 0',
+            margin: '10 10 0 10',
             localized: {
                 html: '{create.where.addressPlaces}'
             },
@@ -77,7 +78,7 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Where', {
         }, {
             xtype: 'label',
             reference: 'otherResultsLabel',
-            margin: '10 0 0 0',
+            margin: '10 10 0 10',
             localized: {
                 html: '{create.where.otherPlaces.otherPlaces}'
             }

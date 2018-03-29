@@ -5,6 +5,7 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.When', {
     referenceHolder: true,
     defaultListenerScope: true,
 
+    bodyPadding: '8 10',
     layout: {
         type: 'vbox',
         align: 'stretch'

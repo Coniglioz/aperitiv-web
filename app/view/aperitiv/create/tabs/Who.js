@@ -15,6 +15,9 @@ Ext.define('Aperitiv.view.aperitiv.create.tabs.Who', {
     itemTpl: '<div class="aperitiv-location-picker-text"><b>{name}</b><br><small>{info}</small></div>',
 
     listeners: {
+        activate: function () {
+            this.lookupViewModel().set('confirmEnabled', false);
+        },
         childtap: 'onSelectionChange',
         buffer: 50
     },
